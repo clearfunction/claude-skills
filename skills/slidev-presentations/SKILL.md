@@ -100,11 +100,13 @@ See the `assets/` directory for complete example presentations:
 
 ## Reference Documentation
 
-See the `references/` directory for syntax details:
+See the `references/` directory for detailed documentation:
 
-- `slidev-quick-reference.md` - Complete syntax cheatsheet
-- `layouts-guide.md` - All layouts with usage guidance
-- `themes.md` - Theme options and customization
+- [slidev-quick-reference.md](references/slidev-quick-reference.md) - Complete syntax cheatsheet
+- [layouts-guide.md](references/layouts-guide.md) - All layouts with usage guidance
+- [themes.md](references/themes.md) - Theme options and customization
+- [advanced-features.md](references/advanced-features.md) - Monaco editor, animations, addons, icons
+- [multi-file-organization.md](references/multi-file-organization.md) - Splitting presentations across files
 
 ## Quick Setup
 
@@ -120,6 +122,50 @@ pnpm create slidev
 # Or add to existing project
 npm install @slidev/cli @slidev/theme-default
 ```
+
+## Linting Configuration (Required)
+
+Slidev's multi-frontmatter syntax conflicts with standard markdown linters. **Always ensure a `.markdownlint.json` exists** in the presentation directory before generating slides.
+
+### Why This Matters
+
+Slidev uses `---` separators with per-slide frontmatter:
+
+```markdown
+---
+layout: section
+---
+```
+
+Standard markdownlint interprets `layout: section` + `---` as a setext-style heading and "fixes" it to `## layout: section`, corrupting the presentation.
+
+### Required Configuration
+
+Create `.markdownlint.json` in the presentation directory:
+
+```json
+{
+  "MD003": false,
+  "MD024": false,
+  "MD025": false,
+  "MD026": false,
+  "MD033": false,
+  "MD041": false
+}
+```
+
+| Rule  | Why Disabled                                             |
+| ----- | -------------------------------------------------------- |
+| MD003 | Prevents setext→ATX conversion that corrupts frontmatter |
+| MD024 | Slides often have repeated headings across slides        |
+| MD025 | Each slide can have its own H1                           |
+| MD026 | Slide titles may end with punctuation                    |
+| MD033 | Slidev uses inline HTML for layouts and animations       |
+| MD041 | First line is YAML frontmatter, not a heading            |
+
+### Automatic Setup
+
+All `/slidev:*` commands should check for and create this config file before writing `slides.md`. If modifying an existing presentation, verify the config exists first.
 
 Run the presentation:
 
@@ -257,157 +303,30 @@ graph TD
 
 ## Advanced Features
 
-See `references/slidev-quick-reference.md` for complete documentation.
+For advanced functionality, see [references/advanced-features.md](references/advanced-features.md):
 
-### Core Features
+- **Shiki Magic Move** - Animated code transitions
+- **Monaco Editor** - Interactive, editable code blocks (`{monaco}`, `{monaco-run}`)
+- **v-motion** - Movement animations
+- **v-mark** - Hand-drawn style annotations
+- **Addons** - Python execution, QR codes, diagrams
+- **Icons** - 100k+ icons via UnoCSS
+- **Live Drawing** - Annotation during presentations
 
-- **Shiki Magic Move** - Animated code transitions between states
-- **Monaco Editor** - Interactive, editable code blocks
-- **Vue Components** - Custom components in `components/` directory
-- **UnoCSS** - Utility-first CSS classes (built-in)
-- **Multi-file splitting** - `src: ./pages/section.md` to import slides
-- **LaTeX Math** - `$E = mc^2$` inline, `$$...$$` for blocks
-- **MDC Syntax** - `[styled text]{style="color:red"}` (requires `mdc: true`)
+## Multi-File Organization
 
-### Advanced Animations
+For large presentations (30+ slides), split across multiple files. See [references/multi-file-organization.md](references/multi-file-organization.md).
 
-**v-motion** - Movement animations with @vueuse/motion:
-
-```html
-<div v-motion
-  :initial="{ x: -80, opacity: 0 }"
-  :enter="{ x: 0, opacity: 1 }"
-  :click-1="{ scale: 1.2 }"
->
-  Animates on enter and click
-</div>
-```
-
-**Click Ranges** - Control visibility windows:
-
-```html
-<div v-click="[2, 5]">Visible at clicks 2-4</div>
-```
-
-**Relative Positioning** - Position clicks relative to previous:
-
-```html
-<div v-click="'+2'">Two clicks after previous</div>
-```
-
-### Themes
-
-Official themes: `default`, `seriph`, `apple-basic`, `shibainu`, `bricks`
-
-```yaml
----
-theme: seriph
----
-```
-
-Browse: <https://sli.dev/resources/theme-gallery>
-
-### Addons
-
-Extend Slidev with addons for Python execution, QR codes, diagrams, and more:
-
-```yaml
----
-addons:
-  - slidev-addon-python-runner
-  - slidev-addon-qrcode
----
-```
-
-Popular addons: `python-runner`, `rabbit`, `excalidraw`, `qrcode`, `asciinema`
-
-Browse: <https://sli.dev/resources/addon-gallery>
-
-### v-mark Rough Annotations
-
-Add hand-drawn style emphasis to any element using RoughNotation:
-
-```html
-<span v-mark.underline>Important concept</span>
-<span v-mark.circle>Key term</span>
-<span v-mark.highlight="{ color: 'yellow' }">Highlighted</span>
-<span v-mark.box>Boxed content</span>
-<span v-mark.strike>Crossed out</span>
-```
-
-Click-triggered marks (appears on specific click):
-
-```html
-<span v-mark.underline="3">Appears on click 3</span>
-```
-
-Types: `underline`, `circle`, `highlight`, `box`, `bracket`, `strike-through`
-
-### Runnable Monaco Editor
-
-Live code execution in slides - perfect for workshops and demos:
-
-````markdown
-```typescript {monaco-run}
-// Audience can edit AND execute this code
-const result = [1, 2, 3].map(x => x * 2)
-console.log(result) // Output appears below!
-```
-````
-
-Use `{monaco-run}` instead of `{monaco}` to enable execution with output display.
-
-### Live Drawing & Annotations
-
-Built-in drawing tools (powered by drauu) for live annotation during presentations:
-
-- Press `d` to toggle drawing mode
-- Annotations persist across slide navigation
-- Configure in frontmatter:
-
-```yaml
----
-drawings:
-  enabled: true
-  persist: true
-  presenterOnly: false
----
-```
-
-### Click-Synced Presenter Notes
-
-Sync presenter notes to your click animations using `[click]` markers:
+Quick example:
 
 ```markdown
-# Slide Title
+---
+src: ./slides/01-intro.md
+---
 
-<v-clicks>
-
-- Point A
-- Point B
-- Point C
-
-</v-clicks>
-
-<!--
-[click] Explain point A in detail
-[click] Now discuss point B
-[click] Finally cover point C
--->
+---
+src: ./slides/02-content.md
+---
 ```
 
-The presenter view shows only the relevant note section as you progress through clicks.
-
-### Icons (UnoCSS Icons)
-
-Access 100k+ icons from Iconify using UnoCSS class syntax:
-
-```html
-<div class="i-carbon-logo-github text-4xl" />
-<div class="i-mdi-heart text-red-500 text-3xl" />
-<div class="i-heroicons-check-circle text-green-500" />
-```
-
-Format: `i-{collection}-{icon-name}`
-
-Browse icons: <https://icones.js.org/>
+Benefits: No linting conflicts, easier reorganization, better version control.

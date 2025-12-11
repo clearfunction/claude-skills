@@ -10,40 +10,53 @@ Add a new slide with layout: **$ARGUMENTS**
 
 ## Instructions
 
-1. **Read the existing `slides.md`** file to understand:
+1. **Verify linting config exists** - Check for `.markdownlint.json` in the same directory as `slides.md`. If missing, create it first:
+
+   ```json
+   {
+     "MD003": false,
+     "MD024": false,
+     "MD025": false,
+     "MD026": false,
+     "MD033": false,
+     "MD041": false
+   }
+   ```
+
+2. **Read the existing `slides.md`** file to understand:
    - Current theme and style
    - Content flow and structure
    - Where the new slide should be inserted
 
-2. **Ask the user** (if not specified):
+3. **Ask the user** (if not specified):
    - What content should this slide contain?
    - Where should it be inserted (after which slide)?
 
-3. **Generate the slide** based on the requested layout:
+4. **Generate the slide** based on the requested layout:
 
    **Available layouts**:
 
-   | Layout | Use Case |
-   |--------|----------|
-   | `cover` | Title/opening slide |
-   | `center` | Centered statement |
-   | `section` | Section divider |
-   | `two-cols` | Side-by-side content |
-   | `two-cols-header` | Header + two columns |
-   | `image-right` | Image with content |
-   | `fact` | Highlight a statistic |
-   | `quote` | Quotation |
-   | `end` | Closing slide |
+   | Layout            | Use Case              |
+   | ----------------- | --------------------- |
+   | `cover`           | Title/opening slide   |
+   | `center`          | Centered statement    |
+   | `section`         | Section divider       |
+   | `two-cols`        | Side-by-side content  |
+   | `two-cols-header` | Header + two columns  |
+   | `image-right`     | Image with content    |
+   | `fact`            | Highlight a statistic |
+   | `quote`           | Quotation             |
+   | `end`             | Closing slide         |
 
    **Special templates**:
 
-   | Template | Description |
-   |----------|-------------|
+   | Template          | Description                     |
+   | ----------------- | ------------------------------- |
    | `code-comparison` | Before/after code with two-cols |
-   | `pros-cons` | Two-column pros and cons list |
-   | `timeline` | Mermaid Gantt chart |
-   | `architecture` | Mermaid flowchart |
+   | `pros-cons`       | Two-column pros and cons list   |
+   | `timeline`        | Mermaid Gantt chart             |
+   | `architecture`    | Mermaid flowchart               |
 
-4. **Insert the slide** at the appropriate location in `slides.md`
+5. **Insert the slide** at the appropriate location in `slides.md`
 
-5. **Confirm the addition** and show a preview of the slide markdown
+6. **Confirm the addition** and show a preview of the slide markdown

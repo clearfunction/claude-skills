@@ -388,9 +388,27 @@ Once the plan is approved:
 
 ```text
 {project-name}-presentation/
+├── .markdownlint.json                    # Linting config (required)
 ├── {project-name}-presentation-plan.md  # The plan (presenter reference)
 └── slides.md                             # The slides
-````
+```
+
+### Linting Configuration
+
+Before writing `slides.md`, create `.markdownlint.json` in the presentation directory:
+
+```json
+{
+  "MD003": false,
+  "MD024": false,
+  "MD025": false,
+  "MD026": false,
+  "MD033": false,
+  "MD041": false
+}
+```
+
+This prevents linters from corrupting Slidev's multi-frontmatter syntax.
 
 ### Final Instructions
 
@@ -403,3 +421,4 @@ Preview: npx slidev slides.md
 
 The plan document serves as your presenter notes!
 ```
+````

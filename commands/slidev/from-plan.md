@@ -6,16 +6,37 @@ allowed-tools: Read, Write, Glob, Grep
 
 # Generate Slides from Presentation Plan
 
-Generate a complete Slidev `slides.md` from the plan: **$ARGUMENTS**
+Generate a complete Slidev `slides.md` from the plan file: **$ARGUMENTS**
+
+**IMPORTANT:** The plan file path is provided above in `$ARGUMENTS`. Use this path directly with the Read tool. Do NOT search for files with Glob - the user has already specified exactly which file to use.
 
 ## Prerequisites
 
 - A presentation plan file created by `/slidev:plan` or manually
 - Plan should be reviewed and approved by the user
 
+## Phase 0: Setup Linting Configuration
+
+Before writing any slides, ensure `.markdownlint.json` exists in the target directory (same directory where `slides.md` will be created):
+
+```json
+{
+  "MD003": false,
+  "MD024": false,
+  "MD025": false,
+  "MD026": false,
+  "MD033": false,
+  "MD041": false
+}
+```
+
+This prevents linters from corrupting Slidev's multi-frontmatter syntax.
+
 ## Phase 1: Parse the Plan
 
-Read the plan file and extract:
+Read the plan file at the path specified in `$ARGUMENTS` above. Do NOT use Glob to search for files - the path has already been provided.
+
+Extract:
 
 1. **Metadata**
    - Title
