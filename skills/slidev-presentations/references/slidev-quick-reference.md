@@ -236,6 +236,101 @@ This appears after one click
 <div v-click.hide="3">Hidden after 3 clicks</div>
 ```
 
+### Click Ranges (Visibility Windows)
+
+Control when elements appear AND disappear:
+
+```html
+<!-- Visible at clicks 2-4, hidden before and after -->
+<div v-click="[2, 5]">Visible at clicks 2, 3, 4</div>
+
+<!-- Hide during a specific range -->
+<div v-click.hide="[2, 4]">Hidden at clicks 2, 3</div>
+```
+
+### Relative Click Positioning
+
+Position clicks relative to the previous element:
+
+```html
+<div v-click>First (click 1)</div>
+<div v-click="'+2'">Two clicks later (click 3)</div>
+<div v-click="'-1'">One click before previous (click 2)</div>
+```
+
+Use quotes for relative values: `'+1'`, `'-1'`, `'+2'`
+
+### v-clicks Options
+
+Control batch reveal behavior:
+
+```html
+<!-- Apply to nested children (depth levels) -->
+<v-clicks depth="2">
+  <li>Item with <strong>nested bold</strong></li>
+</v-clicks>
+
+<!-- Reveal multiple items per click -->
+<v-clicks every="2">
+  <li>A</li><li>B</li>  <!-- Both on click 1 -->
+  <li>C</li><li>D</li>  <!-- Both on click 2 -->
+</v-clicks>
+```
+
+### v-motion (Movement Animations)
+
+Animate element position, scale, and opacity using @vueuse/motion:
+
+```html
+<!-- Basic enter/leave animation -->
+<div
+  v-motion
+  :initial="{ x: -80, opacity: 0 }"
+  :enter="{ x: 0, opacity: 1 }"
+  :leave="{ x: 80, opacity: 0 }"
+>
+  Slides in from left, exits to right
+</div>
+```
+
+**Motion States:**
+
+- `initial` - Before entering the slide
+- `enter` - When slide is active and element is visible
+- `leave` - When leaving the slide
+
+**Click-Triggered Motion:**
+
+```html
+<div
+  v-motion
+  :initial="{ y: 100, opacity: 0 }"
+  :enter="{ y: 50, opacity: 0.5 }"
+  :click-1="{ y: 0, opacity: 1 }"
+  :click-2="{ scale: 1.2 }"
+  :click-2-4="{ x: 40 }"
+>
+  Multi-step motion animation
+</div>
+```
+
+- `click-x` - Triggers at click number x
+- `click-x-y` - Active during clicks x through y-1
+
+**Combining with v-click:**
+
+```html
+<div v-click="[2, 4]" v-motion
+  :initial="{ scale: 0 }"
+  :enter="{ scale: 1 }"
+  :leave="{ scale: 0 }"
+>
+  Appears at click 2, animates out at click 4
+</div>
+```
+
+**Supported Properties:** `x`, `y`, `scale`, `rotate`, `opacity`, `skewX`, `skewY`
+
 ## Presenter Notes
 
 ```markdown
@@ -266,7 +361,75 @@ transition: fade
 ---
 ```
 
-Options: `slide-left`, `slide-right`, `slide-up`, `slide-down`, `fade`, `fade-out`, `none`
+**Built-in Options:** `slide-left`, `slide-right`, `slide-up`, `slide-down`, `fade`, `fade-out`, `view-transition`, `none`
+
+### Directional Transitions
+
+Specify different transitions for forward vs backward navigation:
+
+```yaml
+---
+transition: slide-left | slide-right
+---
+```
+
+Format: `forward-transition | backward-transition`
+
+### Custom Transition CSS
+
+Create custom transitions in your `styles/` directory:
+
+```css
+/* styles/transitions.css */
+
+/* Define a custom "zoom" transition */
+.zoom-enter-active,
+.zoom-leave-active {
+  transition: all 0.5s ease;
+}
+
+.zoom-enter-from {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+.zoom-leave-to {
+  opacity: 0;
+  transform: scale(1.5);
+}
+```
+
+Use in frontmatter:
+
+```yaml
+---
+transition: zoom
+---
+```
+
+### Customizing Click Animation Transitions
+
+Override default v-click behavior globally:
+
+```css
+/* styles/main.css */
+.slidev-vclick-target {
+  transition: all 500ms ease;
+}
+
+.slidev-vclick-hidden {
+  opacity: 0;
+  transform: scale(0.8) translateY(10px);
+  /* Or use: transform: translateX(-20px); */
+}
+```
+
+Classes applied automatically:
+
+- `.slidev-vclick-target` - All animated elements
+- `.slidev-vclick-hidden` - Hidden state (before reveal or after hide)
+- `.slidev-vclick-current` - Currently animating element
+- `.slidev-vclick-prior` - Previously revealed elements
 
 ## Diagrams
 
@@ -582,3 +745,80 @@ Use `[click]` markers to sync notes with animations:
 Format: `i-{collection}-{icon-name}`
 
 Browse: <https://icones.js.org/>
+
+## Themes
+
+### Official Themes
+
+| Theme         | Description              | Install                     |
+| ------------- | ------------------------ | --------------------------- |
+| `default`     | Clean, minimal default   | Built-in                    |
+| `seriph`      | Elegant serif typography | `@slidev/theme-seriph`      |
+| `apple-basic` | Apple Keynote inspired   | `@slidev/theme-apple-basic` |
+| `shibainu`    | Playful, colorful design | `@slidev/theme-shibainu`    |
+| `bricks`      | Bold, structured blocks  | `@slidev/theme-bricks`      |
+
+### Using a Theme
+
+```yaml
+---
+theme: seriph
+---
+```
+
+Or install from npm:
+
+```bash
+npm install @slidev/theme-seriph
+```
+
+### Theme Gallery
+
+Browse all themes: <https://sli.dev/resources/theme-gallery>
+
+Search npm: <https://www.npmjs.com/search?q=keywords%3Aslidev-theme>
+
+## Addons
+
+Addons extend Slidev with extra features. Add via frontmatter:
+
+```yaml
+---
+addons:
+  - slidev-addon-python-runner
+  - slidev-addon-qrcode
+---
+```
+
+### Popular Addons
+
+| Addon                        | Description                      | Use Case             |
+| ---------------------------- | -------------------------------- | -------------------- |
+| `slidev-addon-python-runner` | Run Python in slides via Pyodide | Workshops, tutorials |
+| `slidev-addon-rabbit`        | Presentation timer & progress    | Time management      |
+| `slidev-addon-excalidraw`    | Embed Excalidraw diagrams        | Visual diagrams      |
+| `slidev-addon-qrcode`        | Generate QR codes                | Share links          |
+| `slidev-addon-asciinema`     | Embed terminal recordings        | CLI demos            |
+| `slidev-addon-naive-ui`      | Naive UI components              | Rich UI elements     |
+
+### Installing Addons
+
+```bash
+npm install slidev-addon-qrcode
+```
+
+Then add to frontmatter `addons` array.
+
+### Addon Gallery
+
+Browse all addons: <https://sli.dev/resources/addon-gallery>
+
+Search npm: <https://www.npmjs.com/search?q=keywords%3Aslidev-addon>
+
+## Additional Resources
+
+- **Official Docs:** <https://sli.dev/>
+- **Theme Gallery:** <https://sli.dev/resources/theme-gallery>
+- **Addon Gallery:** <https://sli.dev/resources/addon-gallery>
+- **GitHub:** <https://github.com/slidevjs/slidev>
+- **Icon Browser:** <https://icones.js.org/>

@@ -257,15 +257,71 @@ graph TD
 
 ## Advanced Features
 
-See reference files for complete documentation:
+See `references/slidev-quick-reference.md` for complete documentation.
+
+### Core Features
 
 - **Shiki Magic Move** - Animated code transitions between states
-- **Monaco Editor** - Interactive, editable code blocks (see below)
+- **Monaco Editor** - Interactive, editable code blocks
 - **Vue Components** - Custom components in `components/` directory
 - **UnoCSS** - Utility-first CSS classes (built-in)
 - **Multi-file splitting** - `src: ./pages/section.md` to import slides
 - **LaTeX Math** - `$E = mc^2$` inline, `$$...$$` for blocks
 - **MDC Syntax** - `[styled text]{style="color:red"}` (requires `mdc: true`)
+
+### Advanced Animations
+
+**v-motion** - Movement animations with @vueuse/motion:
+
+```html
+<div v-motion
+  :initial="{ x: -80, opacity: 0 }"
+  :enter="{ x: 0, opacity: 1 }"
+  :click-1="{ scale: 1.2 }"
+>
+  Animates on enter and click
+</div>
+```
+
+**Click Ranges** - Control visibility windows:
+
+```html
+<div v-click="[2, 5]">Visible at clicks 2-4</div>
+```
+
+**Relative Positioning** - Position clicks relative to previous:
+
+```html
+<div v-click="'+2'">Two clicks after previous</div>
+```
+
+### Themes
+
+Official themes: `default`, `seriph`, `apple-basic`, `shibainu`, `bricks`
+
+```yaml
+---
+theme: seriph
+---
+```
+
+Browse: <https://sli.dev/resources/theme-gallery>
+
+### Addons
+
+Extend Slidev with addons for Python execution, QR codes, diagrams, and more:
+
+```yaml
+---
+addons:
+  - slidev-addon-python-runner
+  - slidev-addon-qrcode
+---
+```
+
+Popular addons: `python-runner`, `rabbit`, `excalidraw`, `qrcode`, `asciinema`
+
+Browse: <https://sli.dev/resources/addon-gallery>
 
 ### v-mark Rough Annotations
 
