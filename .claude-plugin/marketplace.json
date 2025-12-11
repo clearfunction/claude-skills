@@ -1,0 +1,7 @@
+{
+  "name": "clearfunction-skills",
+  "displayName": "Clear Function Skills",
+  "description": "Production-ready Claude Code skills for presentations, documentation, and developer workflows",
+  "category": "productivity",
+  "tags": ["presentations", "slidev", "markdown", "documentation"]
+}

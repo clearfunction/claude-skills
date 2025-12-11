@@ -1,0 +1,13 @@
+{
+  "name": "clearfunction-skills",
+  "version": "0.1.0",
+  "description": "Production-ready Claude Code skills for presentations, documentation, and developer workflows by Clear Function",
+  "author": {
+    "name": "Clear Function",
+    "url": "https://github.com/clearfunction"
+  },
+  "homepage": "https://github.com/clearfunction/clearfunction-claude-skills",
+  "repository": "https://github.com/clearfunction/clearfunction-claude-skills",
+  "license": "Apache-2.0",
+  "keywords": ["presentations", "slidev", "documentation", "developer-tools", "markdown"]
+}
