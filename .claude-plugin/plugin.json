@@ -1,13 +1,23 @@
 {
-  "name": "clearfunction-skills",
+  "name": "cf-devtools",
   "version": "0.1.0",
-  "description": "Production-ready Claude Code skills for presentations, documentation, and developer workflows by Clear Function",
+  "description": "Production-ready Claude Code skills for presentations, secrets management, and developer workflows. Built by Clear Function.",
   "author": {
     "name": "Clear Function",
-    "url": "https://github.com/clearfunction"
+    "url": "https://clearfunction.com"
   },
-  "homepage": "https://github.com/clearfunction/clearfunction-claude-skills",
-  "repository": "https://github.com/clearfunction/clearfunction-claude-skills",
+  "homepage": "https://github.com/clearfunction/cf-devtools",
+  "repository": "https://github.com/clearfunction/cf-devtools",
   "license": "Apache-2.0",
-  "keywords": ["presentations", "slidev", "documentation", "developer-tools", "markdown"]
+  "keywords": [
+    "presentations",
+    "slidev",
+    "secrets",
+    "1password",
+    "developer-tools",
+    "documentation",
+    "enterprise",
+    "fintech",
+    "healthcare"
+  ]
 }

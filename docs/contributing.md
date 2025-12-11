@@ -1,4 +1,4 @@
-# Contributing to Clear Function Claude Skills
+# Contributing to CF DevTools
 
 Thank you for your interest in contributing! This guide will help you create and submit new skills.
 
@@ -30,7 +30,7 @@ Every skill requires a `SKILL.md` file with YAML frontmatter:
 ```markdown
 ---
 name: your-skill-name
-description: Brief description of what this skill does and when to use it (max 200 chars)
+description: Brief description of what this skill does and when to use it (max 1024 chars)
 ---
 
 # Your Skill Name
@@ -59,7 +59,7 @@ Guidelines for optimal results.
 | Field         | Required | Max Length | Description                              |
 | ------------- | -------- | ---------- | ---------------------------------------- |
 | `name`        | Yes      | 64 chars   | Lowercase, hyphens for spaces            |
-| `description` | Yes      | 200 chars  | Claude uses this to determine activation |
+| `description` | Yes      | 1024 chars | Claude uses this to determine activation |
 
 ### 4. Content Guidelines
 
@@ -76,7 +76,7 @@ Guidelines for optimal results.
 
    ```bash
    # In Claude Code
-   /plugin add /path/to/clearfunction-claude-skills
+   /plugin add /path/to/cf-devtools
    ```
 
 2. Test with prompts that should trigger your skill

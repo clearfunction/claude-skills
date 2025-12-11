@@ -1,27 +1,31 @@
-# Clear Function Claude Skills
+# CF DevTools
 
-Production-ready Claude Code skills for presentations, documentation, and developer workflows.
+> Production-ready Claude Code skills by [Clear Function](https://clearfunction.com) - 10 years building secure, compliant software for fintech and healthcare.
+
+**200+ solutions delivered | SOC 2 Certified | 5/5 Clutch Rating**
+
+Developer workflows for presentations, secrets management, and documentation - battle-tested in enterprise.
 
 ## Installation
 
 ### Claude Code (CLI)
 
 ```bash
-# Add from marketplace
-/plugin marketplace add clearfunction/clearfunction-claude-skills
+# Add the marketplace
+/plugin marketplace add clearfunction/cf-devtools
 
 # Install the plugin
-/plugin install clearfunction-skills@clearfunction-claude-skills
+/plugin install cf-devtools@cf-devtools
 ```
 
 ### Manual Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/clearfunction/clearfunction-claude-skills.git
+git clone https://github.com/clearfunction/cf-devtools.git
 
 # Add as local plugin
-/plugin add /path/to/clearfunction-claude-skills
+/plugin add /path/to/cf-devtools
 ```
 
 ## Available Skills
@@ -44,19 +48,36 @@ Generate browser-based presentations using [Slidev](https://sli.dev/) - the pres
 Create a technical presentation about Kubernetes architecture for a DevOps team
 ```
 
+### 1password-direnv-secrets
+
+Configure 1Password CLI with direnv for fast, secure secret loading in development environments.
+
+**Features:**
+
+- Single `op run` pattern (5x faster than multiple `op read` calls)
+- Secure `.env.op` files (safe to commit - contains only `op://` references)
+- Automatic secret resolution on directory entry
+- Works with any 1Password vault
+
+**Usage:** Claude automatically activates when you need 1Password + direnv setup.
+
+```text
+Set up 1Password with direnv for my project's environment variables
+```
+
 ## Recommended Workflow
 
 Follow the **plan-first approach** for quality presentations:
 
 ```text
-Context → Plan → Review → Slides
+Context -> Plan -> Review -> Slides
 ```
 
-| Scenario                     | Commands                             | Output        |
-| ---------------------------- | ------------------------------------ | ------------- |
-| Topic-based presentation     | `/slidev:plan` → `/slidev:from-plan` | Plan + Slides |
-| Codebase presentation        | `/slidev:from-codebase`              | Plan + Slides |
-| Quick slides (skip planning) | `/slidev:new`                        | Slides only   |
+| Scenario                     | Commands                              | Output        |
+| ---------------------------- | ------------------------------------- | ------------- |
+| Topic-based presentation     | `/slidev:plan` -> `/slidev:from-plan` | Plan + Slides |
+| Codebase presentation        | `/slidev:from-codebase`               | Plan + Slides |
+| Quick slides (skip planning) | `/slidev:new`                         | Slides only   |
 
 ## Slash Commands
 
@@ -134,24 +155,26 @@ Add a specific slide type to an existing presentation.
 ## Project Structure
 
 ```text
-clearfunction-claude-skills/
+cf-devtools/
 ├── .claude-plugin/
 │   ├── plugin.json        # Plugin manifest
 │   └── marketplace.json   # Marketplace metadata
 ├── skills/
-│   └── slidev-presentations/
-│       ├── SKILL.md       # Skill definition
-│       ├── references/    # Syntax documentation
-│       └── assets/        # Example presentations
+│   ├── slidev-presentations/
+│   │   ├── SKILL.md       # Skill definition
+│   │   ├── references/    # Syntax documentation
+│   │   └── assets/        # Example presentations
+│   └── 1password-direnv-secrets/
+│       └── SKILL.md       # Skill definition
 ├── commands/
 │   └── slidev/            # Slidev slash commands
-│       ├── plan.md        # /slidev:plan (create plan)
-│       ├── from-plan.md   # /slidev:from-plan (slides from plan)
-│       ├── from-codebase.md  # /slidev:from-codebase (full workflow)
-│       ├── new.md         # /slidev:new (quick slides)
+│       ├── plan.md        # /slidev:plan
+│       ├── from-plan.md   # /slidev:from-plan
+│       ├── from-codebase.md  # /slidev:from-codebase
+│       ├── new.md         # /slidev:new
 │       ├── export.md      # /slidev:export
 │       └── add.md         # /slidev:add
-├── agents/                # Future: Custom agents
+├── agents/                # Custom agents (future)
 └── docs/                  # Documentation
 ```
 
@@ -169,6 +192,7 @@ See [docs/contributing.md](docs/contributing.md) for detailed guidelines.
 ## Roadmap
 
 - [x] slidev-presentations - Browser-based presentations
+- [x] 1password-direnv-secrets - Fast secret loading
 - [ ] mermaid-diagrams - Architecture and flow diagrams
 - [ ] adr-generator - Architecture Decision Records
 - [ ] changelog-writer - Conventional changelog generation
@@ -184,4 +208,4 @@ Contributions welcome! Please read [docs/contributing.md](docs/contributing.md) 
 
 ---
 
-Built by [Clear Function](https://clearfunction.com)
+Built by [Clear Function](https://clearfunction.com) | [AI Strategy & Implementation](https://clearfunction.com) | Memphis, TN
